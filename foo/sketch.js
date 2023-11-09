@@ -1,5 +1,12 @@
+let font;
+
+function preload() {
+  font = loadFont("Inconsolata.ttf");
+}
+
 function setup() {
   createCanvas(400, 400, WEBGL);
+  textFont(font);
 }
 
 function draw() {
