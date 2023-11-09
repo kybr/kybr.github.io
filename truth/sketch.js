@@ -12,5 +12,6 @@ function setup() {
 
 function draw() {
   background(255);
+  rotate(frameCount/1000);
   text("this is the truth", 0, 0)
 }
