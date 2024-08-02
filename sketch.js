@@ -106,6 +106,7 @@ class TriangleSystem {
 }
 
 let symbola;
+
 function preload() {
   fontRegular = loadFont("Symbola-Limited.otf");
   // reduced font to 3 characters using:
@@ -117,7 +118,8 @@ let system;
 let observer;
 let cat;
 function setup() {
-  createCanvas(600, 70);
+  createCanvas(windowWidth, windowWidth * 0.116667);
+  //createCanvas(600, 70);
   textFont(fontRegular);
   textSize(72);
   stroke(255);
