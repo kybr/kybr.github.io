@@ -118,7 +118,8 @@ let system;
 let observer;
 let cat;
 function setup() {
-  createCanvas(windowWidth, windowWidth * 0.116667);
+  let W = windowWidth - 25 - 100;
+  createCanvas(W, W * 0.116667);
   //createCanvas(600, 70);
   textFont(fontRegular);
   textSize(72);
