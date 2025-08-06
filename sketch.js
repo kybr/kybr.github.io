@@ -1,15 +1,6 @@
 // Karl Yerkes
 // 2021-12-16
 //
-// How do we see a cat?
-//
-// Cats are made of triangles. The triangles come at us
-// through space and hit our eyes. The triangles change us.
-// We become the cat a little bit because of its triangles.
-// And, that is how we see a cat.
-//
-// Use this? https://github.com/spite/ccapture.js/
-//
 
 class TriangleSystem {
   constructor() {
@@ -105,52 +96,49 @@ class TriangleSystem {
   }
 }
 
-let symbola;
-
-function preload() {
-  fontRegular = loadFont("Symbola-Limited.otf");
-  // reduced font to 3 characters using:
-  // pyftsubset Symbola.otf --unicodes=U+1F408,U+25C1,U+23FF --output-file=Symbola-Limited.otf
-  // https://stackoverflow.com/questions/12976424/how-to-remove-characters-from-a-font-file
-}
-
 let system;
 let observer;
 let cat;
-function setup() {
-  let W = windowWidth - 25 - 100;
-  createCanvas(W, W * 0.116667);
-  //createCanvas(600, 70);
-  textFont(fontRegular);
-  textSize(72);
-  stroke(255);
-  system = new TriangleSystem();
-  observer = color(0);
-  cat = color(0);
+
+const N = 72;
+
+async function setup() {
+  // https://fontlibrary.org/en/font/symbola
+  //
+  // reduced font to 3 characters using:
+  // 
+  // https://stackoverflow.com/questions/12976424/how-to-remove-characters-from-a-font-file
+  //
+  // pyftsubset Symbola.otf \
+  //   --unicodes=U+1F408,U+25C1,U+23FF \
+  //   --output-file=Symbola-Limited.otf
+  //
+  let symbola = await loadFont("Symbola-Limited.otf");
+  createCanvas(windowWidth, N);
+  textFont(symbola);
+  textSize(N);
+  noStroke();
   noCursor();
+  textAlign(CENTER, CENTER);
+  system = new TriangleSystem();
+  observer = color(255);
+  cat = color(255);
 }
 function draw() {
   background(255);
-  //clear();
-  textSize(72);
+  textSize(N);
   fill(observer);
-  text("⏿", 5, 56);
+  text("⏿", N / 2, N / 2);
   fill(cat);
-  text("🐈", width - 60, 60);
+  text("🐈", width - N / 2, N / 2);
   if (
-    mouseX > 20 &&
-    mouseX < width - 20 &&
-    mouseY > 10 &&
-    mouseY < height - 10
+    mouseX > N &&
+    mouseX < width - N &&
+    mouseY > 0 &&
+    mouseY < height
   ) {
-    fill(0);
-    text("◁", mouseX - 29, mouseY + 20);
-  } else {
-    mouseX = 0;
-    mouseY = 0;
+    fill(200);
+    text("◁", mouseX, mouseY);
   }
   system.draw();
-  //textSize(18);
-  //fill(0);
-  //text("Cats are made of triangles that make us a little like them.", 80, 60);
 }
