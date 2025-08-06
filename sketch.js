@@ -114,7 +114,7 @@ async function setup() {
   //   --output-file=Symbola-Limited.otf
   //
   let symbola = await loadFont("Symbola-Limited.otf");
-  createCanvas(windowWidth, N);
+  createCanvas(windowWidth - 50, N);
   textFont(symbola);
   textSize(N);
   noStroke();
