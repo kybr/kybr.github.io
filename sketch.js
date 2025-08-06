@@ -2,6 +2,54 @@
 // 2021-12-16
 //
 
+
+let system;
+let observer;
+let cat;
+const N = 72;
+
+async function setup() {
+  // https://fontlibrary.org/en/font/symbola
+  //
+  // reduced font to 3 characters using:
+  // 
+  // https://stackoverflow.com/questions/12976424/how-to-remove-characters-from-a-font-file
+  //
+  // pyftsubset Symbola.otf \
+  //   --unicodes=U+1F408,U+25C1,U+23FF \
+  //   --output-file=Symbola-Limited.otf
+  //
+  let symbola = await loadFont("Symbola-Limited.otf");
+  createCanvas(windowWidth - 100, N);
+  textFont(symbola);
+  textSize(N);
+  noStroke();
+  noCursor();
+  textAlign(CENTER, CENTER);
+  system = new TriangleSystem();
+  observer = color(255);
+  cat = color(255);
+}
+function draw() {
+  background(255);
+  textSize(N);
+  fill(observer);
+  text("⏿", N / 2, N / 2);
+  fill(cat);
+  text("🐈", width - N / 2, N / 2);
+  if (
+    mouseX > N &&
+    mouseX < width - N &&
+    mouseY > 0 &&
+    mouseY < height
+  ) {
+    fill(200);
+    text("◁", mouseX, mouseY);
+  }
+  system.draw();
+}
+
+
 class TriangleSystem {
   constructor() {
     this.list = [];
@@ -26,13 +74,13 @@ class TriangleSystem {
           continue; // find first invisible triangle
         }
         cat = color(random(255), random(255), random(255));
-        t.x = width - 60;
+        t.x = width - N;
         t.dx = random(1, 5);
-        t.y = 26;
+        t.y = N / 2;
         t.dy = 0;
         t.a = random(2 * PI);
-        t.da = random(0.05, 0.2) * (random() > 0.5 ? -1 : 1);
-        t.size = random(2, 11);
+        t.da = random(0.05, 0.2) * (random() > 0.6 ? -1 : 1);
+        t.size = random(3, 11);
         t.color = cat;
         t.visible = true;
         break;
@@ -94,51 +142,4 @@ class TriangleSystem {
     }
     endShape();
   }
-}
-
-let system;
-let observer;
-let cat;
-
-const N = 72;
-
-async function setup() {
-  // https://fontlibrary.org/en/font/symbola
-  //
-  // reduced font to 3 characters using:
-  // 
-  // https://stackoverflow.com/questions/12976424/how-to-remove-characters-from-a-font-file
-  //
-  // pyftsubset Symbola.otf \
-  //   --unicodes=U+1F408,U+25C1,U+23FF \
-  //   --output-file=Symbola-Limited.otf
-  //
-  let symbola = await loadFont("Symbola-Limited.otf");
-  createCanvas(windowWidth - 50, N);
-  textFont(symbola);
-  textSize(N);
-  noStroke();
-  noCursor();
-  textAlign(CENTER, CENTER);
-  system = new TriangleSystem();
-  observer = color(255);
-  cat = color(255);
-}
-function draw() {
-  background(255);
-  textSize(N);
-  fill(observer);
-  text("⏿", N / 2, N / 2);
-  fill(cat);
-  text("🐈", width - N / 2, N / 2);
-  if (
-    mouseX > N &&
-    mouseX < width - N &&
-    mouseY > 0 &&
-    mouseY < height
-  ) {
-    fill(200);
-    text("◁", mouseX, mouseY);
-  }
-  system.draw();
 }
