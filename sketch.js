@@ -82,6 +82,7 @@ class TriangleSystem {
         t.da = random(0.05, 0.2) * (random() > 0.6 ? -1 : 1);
         t.size = random(3, 11);
         t.color = cat;
+        console.log("new triangle", t);
         t.visible = true;
         break;
       }
@@ -127,19 +128,24 @@ class TriangleSystem {
       }
     }
 
-    beginShape(TRIANGLES);
-    noStroke();
     const A = 0;
     const B = (2 * PI) / 3;
     const C = (4 * PI) / 3;
     for (let t of this.list) {
       if (t.visible) {
+        beginShape(TRIANGLES);
+        noStroke();
         fill(t.color);
         vertex(t.x + t.size * sin(t.a + A), t.y + t.size * cos(t.a + A));
         vertex(t.x + t.size * sin(t.a + B), t.y + t.size * cos(t.a + B));
         vertex(t.x + t.size * sin(t.a + C), t.y + t.size * cos(t.a + C));
+        endShape();
       }
     }
-    endShape();
   }
+}
+
+// update the canvas size when the window is resized
+function windowResized() {
+  resizeCanvas(windowWidth - 100, N);
 }
